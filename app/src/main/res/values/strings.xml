@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Estudo TV</string>
+
+    <!-- Menu da app -->
+    <string name="menu_titulo">Estudo TV</string>
+    <string name="menu_inicio">Início</string>
+    <string name="menu_sair">Sair / trocar de jogador</string>
+    <string name="menu_atualizar">Procurar atualizações</string>
+    <string name="menu_sobre">Sobre</string>
+
+    <!-- Sobre -->
+    <string name="sobre_titulo">Sobre a Estudo TV</string>
+    <string name="sobre_texto">Versão %1$s\nAmbiente: %2$s\n\nApp da família para jogar e estudar na TV da sala. Só abre o Portal de Estudo e os jogos do Sótão 57.</string>
+    <string name="sobre_fechar">Fechar</string>
+    <string name="ambiente_prod">Prod</string>
+    <string name="ambiente_stage">Stage (testes)</string>
+    <string name="ambiente_mudou">Ambiente mudado para: %1$s</string>
+    <string name="faixa_stage">STAGE</string>
+
+    <!-- Sair -->
+    <string name="sair_titulo">Sair do portal?</string>
+    <string name="sair_texto">A sessão desta TV termina. Para voltar a entrar, é preciso ler o QR outra vez com o telemóvel do pai ou da mãe.</string>
+    <string name="sair_sim">Sair</string>
+    <string name="cancelar">Cancelar</string>
+
+    <!-- Sair da app -->
+    <string name="fechar_titulo">Sair da Estudo TV?</string>
+    <string name="fechar_sim">Sair da app</string>
+
+    <!-- Links bloqueados -->
+    <string name="link_bloqueado">Esta ligação abre fora do portal. Vê-a no computador ou no tablet.</string>
+
+    <!-- Sem rede -->
+    <string name="sem_rede_titulo">Sem ligação à internet</string>
+    <string name="sem_rede_texto">Confirma que a TV está ligada ao Wi-Fi e tenta outra vez.</string>
+    <string name="tentar_outra_vez">Tentar outra vez</string>
+
+    <!-- Atualizações -->
+    <string name="atualizacao_titulo">Nova versão disponível (%1$s)</string>
+    <string name="atualizacao_atualizar">Atualizar</string>
+    <string name="atualizacao_mais_tarde">Mais tarde</string>
+    <string name="atualizacao_a_descarregar">A descarregar a versão nova…</string>
+    <string name="atualizacao_em_dia">A Estudo TV está atualizada (versão %1$s).</string>
+    <string name="atualizacao_erro">Não foi possível atualizar agora. Tenta mais tarde.</string>
+    <string name="atualizacao_verificacao_falhou">O ficheiro descarregado não está certo e não foi instalado. Tenta mais tarde.</string>
+    <string name="atualizacao_permissao_titulo">Falta uma autorização</string>
+    <string name="atualizacao_permissao_texto">Para se atualizar, a Estudo TV precisa de autorização para instalar apps. No ecrã seguinte, liga a Estudo TV e volta atrás. Depois escolhe outra vez «Atualizar».</string>
+    <string name="atualizacao_abrir_definicoes">Abrir definições</string>
+</resources>

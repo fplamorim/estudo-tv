@@ -1,0 +1,24 @@
+# Em cada push e PR: compila, corre o lint e os testes. Não tem acesso aos segredos.
+name: CI
+
+on:
+  push:
+    branches: ["**"]
+    tags-ignore: ["**"]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  compilar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-java@77dd5b2ce225ea11469928ac317850245a74ae78 # v6.2.0
+        with:
+          distribution: temurin
+          java-version: "17"
+          cache: gradle
+      - name: Compilar, lint e testes
+        run: ./gradlew assembleDebug lintDebug testDebugUnitTest --console=plain

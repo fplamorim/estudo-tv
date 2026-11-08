@@ -1,0 +1,14 @@
+# Compilação
+build/
+.gradle/
+local.properties
+*.iml
+.idea/
+captures/
+.kotlin/
+
+# Chaves de assinatura: NUNCA no repositório
+*.jks
+*.keystore
+*.b64
+keystore.properties

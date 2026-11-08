@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- App só para TV: não exige ecrã tátil; o lançador da Google TV (Leanback) é obrigatório. -->
+    <uses-feature android:name="android.software.leanback" android:required="true" />
+    <uses-feature android:name="android.hardware.touchscreen" android:required="false" />
+    <uses-feature android:name="android.hardware.gamepad" android:required="false" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- Atualizações: descarregar a versão nova da Release do GitHub e abrir o instalador. -->
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+
+    <application
+        android:allowBackup="false"
+        android:fullBackupContent="false"
+        android:banner="@drawable/banner"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="false"
+        android:theme="@style/Tema"
+        android:usesCleartextTraffic="false"
+        android:dataExtractionRules="@xml/extracao_dados"
+        tools:targetApi="36">
+
+        <!-- WebView: sem métricas para a Google e sem Safe Browsing (que enviaria endereços para fora). -->
+        <meta-data android:name="android.webkit.WebView.MetricsOptOut" android:value="true" />
+        <meta-data android:name="android.webkit.WebView.EnableSafeBrowsing" android:value="false" />
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:launchMode="singleTask"
+            android:screenOrientation="landscape"
+            android:configChanges="keyboard|keyboardHidden|navigation|orientation|screenLayout|screenSize|smallestScreenSize|uiMode"
+            tools:ignore="DiscouragedApi,LockedOrientationActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <receiver
+            android:name=".InstaladorRecetor"
+            android:exported="false" />
+    </application>
+</manifest>
