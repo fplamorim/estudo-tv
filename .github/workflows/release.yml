@@ -29,7 +29,7 @@ jobs:
       - uses: actions/setup-java@77dd5b2ce225ea11469928ac317850245a74ae78 # v6.2.0
         with:
           distribution: temurin
-          java-version: "17"
+          java-version: "21"
 
       - name: Confirmar a tag
         run: |
@@ -64,8 +64,10 @@ jobs:
 
       - name: Verificar a assinatura
         run: |
+          ls "$ANDROID_HOME"/build-tools/
           APKSIGNER=$(ls "$ANDROID_HOME"/build-tools/*/apksigner | sort -V | tail -1)
-          "$APKSIGNER" verify --print-certs app/build/outputs/apk/release/app-release.apk | grep -E "^Signer #1 certificate (DN|SHA-256)"
+          echo "A usar: $APKSIGNER"
+          "$APKSIGNER" verify --verbose --print-certs app/build/outputs/apk/release/app-release.apk
           cp app/build/outputs/apk/release/app-release.apk estudo-tv.apk
           sha256sum estudo-tv.apk | tee estudo-tv.apk.sha256
 

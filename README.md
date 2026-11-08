@@ -25,7 +25,7 @@ Ver [`docs/instalar-na-tv.md`](docs/instalar-na-tv.md). Resumo: na app Downloade
 A keystore nunca entra no repositório. Se se perder, a app instalada deixa de poder ser atualizada.
 
 ## Compilar no computador
-Precisa do JDK 17 e do Android SDK (API 36): `./gradlew assembleDebug`.
+Precisa do JDK 21 e do Android SDK (API 36): `./gradlew assembleDebug`.
 A arte (banner, ícone, logótipo) é gerada por `python3 tools/arte.py`.
 
 ## Licença
