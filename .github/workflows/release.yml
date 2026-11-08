@@ -1,10 +1,22 @@
-# Em cada tag vX.Y.Z: compila o APK de release, assina-o com a keystore dos segredos do repositório
+# Em cada tag vX.Y.Z (ou à mão, em Actions → Release → Run workflow, com a versão): compila o APK de release, assina-o com a keystore dos segredos do repositório
 # e publica estudo-tv.apk na Release. Segredos: KEYSTORE_BASE64, KEYSTORE_PASSWORD, KEY_ALIAS, KEY_PASSWORD.
 name: Release
 
 on:
   push:
     tags: ["v*.*.*"]
+  workflow_dispatch:
+    inputs:
+      versao:
+        description: "Versão (X.Y.Z, sem o v)"
+        required: true
+      notas:
+        description: "Notas da versão (aparecem na TV ao atualizar)"
+        required: false
+        default: ""
+
+env:
+  TAG: ${{ github.event_name == 'workflow_dispatch' && format('v{0}', inputs.versao) || github.ref_name }}
 
 permissions:
   contents: write
@@ -21,7 +33,10 @@ jobs:
 
       - name: Confirmar a tag
         run: |
-          echo "$GITHUB_REF_NAME" | grep -Eq '^v[0-9]+\.[0-9]+\.[0-9]+$' || { echo "A tag tem de ser vX.Y.Z"; exit 1; }
+          echo "$TAG" | grep -Eq '^v[0-9]+\.[0-9]+\.[0-9]+$' || { echo "A versão tem de ser X.Y.Z"; exit 1; }
+          if gh release view "$TAG" >/dev/null 2>&1; then echo "Já existe a Release $TAG"; exit 1; fi
+        env:
+          GH_TOKEN: ${{ github.token }}
 
       - name: Confirmar os segredos
         env:
@@ -43,7 +58,7 @@ jobs:
         run: |
           export KEYSTORE_FILE="$RUNNER_TEMP/estudo-tv.jks"
           printf '%s' "$KEYSTORE_BASE64" | base64 -d > "$KEYSTORE_FILE"
-          export VERSAO="${GITHUB_REF_NAME#v}"
+          export VERSAO="${TAG#v}"
           ./gradlew assembleRelease testDebugUnitTest --console=plain
           rm -f "$KEYSTORE_FILE"
 
@@ -54,16 +69,17 @@ jobs:
           cp app/build/outputs/apk/release/app-release.apk estudo-tv.apk
           sha256sum estudo-tv.apk | tee estudo-tv.apk.sha256
 
-      - name: Publicar a Release
+      - name: Publicar a Release (cria a tag, se for preciso)
         env:
           GH_TOKEN: ${{ github.token }}
+          NOTAS: ${{ inputs.notas }}
         run: |
           SHA=$(cut -d' ' -f1 estudo-tv.apk.sha256)
           {
-            echo "Estudo TV ${GITHUB_REF_NAME#v}"
+            echo "Estudo TV ${TAG#v}"
             echo
-            git tag -l --format='%(contents)' "$GITHUB_REF_NAME"
+            if [ -n "$NOTAS" ]; then echo "$NOTAS"; else git tag -l --format='%(contents)' "$TAG"; fi
             echo
             echo "SHA-256 do estudo-tv.apk: \`$SHA\`"
           } > notas.md
-          gh release create "$GITHUB_REF_NAME" estudo-tv.apk --title "Estudo TV ${GITHUB_REF_NAME#v}" --notes-file notas.md
+          gh release create "$TAG" estudo-tv.apk --target "$GITHUB_SHA" --title "Estudo TV ${TAG#v}" --notes-file notas.md

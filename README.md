@@ -19,7 +19,7 @@ Ver [`docs/instalar-na-tv.md`](docs/instalar-na-tv.md). Resumo: na app Downloade
 - **Stage escondido:** em «Sobre», carregar 5 vezes OK no logótipo. As versões 0.x arrancam no Stage.
 
 ## Publicar uma versão
-1. Criar uma tag `vX.Y.Z` (ex.: `git tag -a v0.1.0 -m "Primeira versão"` e `git push origin v0.1.0`).
+1. Em Actions → Release → Run workflow, escrever a versão (ex.: `0.1.1`) e as notas. Também se pode enviar uma tag `vX.Y.Z`.
 2. O workflow `release.yml` compila, assina com a keystore dos segredos (`KEYSTORE_BASE64`, `KEYSTORE_PASSWORD`, `KEY_ALIAS`, `KEY_PASSWORD`) e publica `estudo-tv.apk` na Release.
 
 A keystore nunca entra no repositório. Se se perder, a app instalada deixa de poder ser atualizada.
